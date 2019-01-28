@@ -1,11 +1,12 @@
 package main
 
-type Id string
+type Id int
+type Time string
 
 type Feed struct {
 	id      Id
 	url     string
-	updated string
+	updated Time
 }
 
 type Post struct {

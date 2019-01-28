@@ -6,7 +6,7 @@ import (
 	"testing"
 )
 
-var testFeed Feed = Feed{"0", "http://www.wancat.cc/atom.xml", "2018-12-31T16:00:00.000Z"}
+var testFeed Feed = Feed{0, "http://www.wancat.cc/atom.xml", "2018-12-31T16:00:00.000Z"}
 
 func TestRequest(t *testing.T) {
 	body, err := Request(testFeed)

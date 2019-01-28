@@ -10,7 +10,7 @@
 > writen in Go  
 
 ## Method
-|      |     |
+| Method | Description |
 | ---- | --- |
 | /add | add new feed |
 | /remove | remove a feed |
@@ -19,26 +19,31 @@
 | /get | get a feed's last posts |
 
 # Architecture
-* Data Saver: to store all of feeds and users
-* RSS checker: get new posts from feeds
-* History saver: to take down last post of each feeds
-* Post sender: make the posts turn into text
-* Feed Search Engine: search a feed from a URL
-* TG Wrapper 
+* - [ ] Database: to store all of feeds and users
+* - [x] RSS checker: get new posts from feeds
+* - [ ] Post sender: make the posts turn into text
+* - [ ] Feed Search Engine: search a feed from a URL
+* - [ ] TG Wrapper 
 
 structure: 
 * Post: to take down a post's title, summary,content, image(if it has)
 * User: to remember a user's feed list
 * Feed : to take down the feed's URL and last post
+* Atom: the atom file parse result
 
 ## RSS checker:
+
 dependent:  
 * HTTP
-* Post  
+* Post 
+* Feed
+* Database
+
 attribute:  
 
 method:  
-* GetNewPost(feed list []string) []Post
-* get(feed string) Post
-* 
+* CheckNew(body []byte, feed Feed) bool
+* Request(feed Feed) []byte
+* Parse(body []byte) Atom
+* CheckAll(feeds []Feed) []Post
 

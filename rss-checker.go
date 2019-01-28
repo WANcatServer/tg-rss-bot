@@ -12,7 +12,7 @@ type Atom struct {
 	XMLName xml.Name `xml:"feed"`
 	Title   string   `xml:"title"`
 	Link    string   `xml:"id"`
-	Updated string   `xml:"updated"`
+	Updated Time     `xml:"updated"`
 	Entry   []Entry  `xml:"entry"`
 }
 
