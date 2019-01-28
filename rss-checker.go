@@ -37,11 +37,15 @@ func Request(feed Feed) (body []byte, err error) {
 	return body, nil
 }
 
-func CheckNew(body []byte, feed Feed) (result bool, err error) {
-	result = false
+func Parse(body []byte) Atom {
 	var v Atom
-	err = xml.Unmarshal(body, &v)
+	xml.Unmarshal(body, &v)
+	return v
+}
+
+func CheckNew(body []byte, feed Feed) (bool, error) {
+	//檢查是否有新文章
+	var v Atom = Parse(body)
 	log.Printf("update v:\t%s\nfeed:\t%s\n", v.Updated, feed.updated)
-	result = v.Updated != feed.updated
-	return result, nil
+	return v.Updated != feed.updated, nil
 }
