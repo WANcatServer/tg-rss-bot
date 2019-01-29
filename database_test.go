@@ -9,7 +9,7 @@ var updated Time = "2018-12-31T16:00:00.000Z"
 var tg string = "t.me/lancatlin"
 
 func TestCRUD(t *testing.T) {
-	var db Database = newJSON_DB("test-data/db.json")
+	var db Database = newjsonDB("test-data/db.json")
 	var userId Id = db.checkUser(tg)
 	var feedId Id = db.checkFeed(url)
 	// insert Feed Data
