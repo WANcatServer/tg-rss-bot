@@ -52,4 +52,5 @@ func TestCRUD(t *testing.T) {
 	if err != nil {
 		t.Error("delete user fatal")
 	}
+	db.Close()
 }

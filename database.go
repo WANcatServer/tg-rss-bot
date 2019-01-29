@@ -1,8 +1,8 @@
 package main
 
-import ()
-
 type Database interface {
+	Close() error
+
 	insertFeed(string, Time) (Id, error)
 	updateFeed(Id, Time) error
 	checkFeed(string) Id

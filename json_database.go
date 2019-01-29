@@ -1,5 +1,10 @@
 package main
 
+import (
+	"encoding/json"
+	"io/ioutil"
+)
+
 type jsonDB struct {
 	feeds []Feed
 	users []User
@@ -16,20 +21,20 @@ func (db *jsonDB) insertFeed(url string, updated Time) (Id, error) {
 	var feed Feed
 	feed.url = url
 	feed.updated = updated
-	feed.id = Id(len(db.feeds))
-	db.feeds = append(db.feeds, feed)
+	feed.id = Id(len(db.Feeds))
+	db.Feeds = append(db.Feeds, feed)
 	return feed.id, nil
 }
 
 func (db *jsonDB) updateFeed(id Id, time Time) error {
 	// update feed's last updated time
-	db.feeds[id].updated = time
+	db.Feeds[id].updated = time
 	return nil
 }
 
 func (db *jsonDB) checkFeed(url string) (id Id) {
 	// checkout a feed id by url
-	for _, v := range db.feeds {
+	for _, v := range db.Feeds {
 		if v.url == url {
 			return v.id
 		}
@@ -39,19 +44,19 @@ func (db *jsonDB) checkFeed(url string) (id Id) {
 
 func (db *jsonDB) getFeed(id Id) (feed *Feed, err error) {
 	// get a feed by id
-	return &db.feeds[id], nil
+	return &db.Feeds[id], nil
 }
 
 func (db *jsonDB) removeFeed(id Id) error {
 	// remove a feed
-	db.feeds[id].url = ""
-	db.feeds[id].updated = ""
+	db.Feeds[id].url = ""
+	db.Feeds[id].updated = ""
 	return nil
 }
 
 func (db *jsonDB) getSubscriber(feedId Id) ([]User, error) {
-	var users []User = make([]User, 0, len(db.users))
-	for _, user := range db.users {
+	var users []User = make([]User, 0, len(db.Users))
+	for _, user := range db.Users {
 		for _, f_id := range user.feeds {
 			if f_id == feedId {
 				users = append(users, user)
@@ -66,16 +71,16 @@ func (db *jsonDB) getSubscriber(feedId Id) ([]User, error) {
 func (db *jsonDB) insertUser(url string) (Id, error) {
 	// insert a new User data into database
 	var user User
-	user.id = Id(len(db.users))
+	user.id = Id(len(db.Users))
 	user.url = url
 	user.feeds = []Id{}
-	db.users = append(db.users, user)
+	db.Users = append(db.Users, user)
 	return user.id, nil
 }
 
 func (db *jsonDB) checkUser(url string) Id {
 	// checkout a user id by url
-	for i, v := range db.users {
+	for i, v := range db.Users {
 		if v.url == url {
 			return Id(i)
 		}
@@ -85,13 +90,13 @@ func (db *jsonDB) checkUser(url string) Id {
 
 func (db *jsonDB) getUser(id Id) (*User, error) {
 	// get a User data
-	return &db.users[id], nil
+	return &db.Users[id], nil
 }
 
 func (db *jsonDB) removeUser(id Id) error {
 	// remove a user data
-	db.users[id].url = ""
-	db.users[id].feeds = nil
+	db.Users[id].url = ""
+	db.Users[id].feeds = nil
 	return nil
 }
 
@@ -105,12 +110,12 @@ func (db *jsonDB) deleteFeed(userId Id, feedId Id) error {
 			break
 		}
 	}
-	db.users[userId].feeds = append(user.feeds[:deleted], user.feeds[deleted+1:]...)
+	db.Users[userId].feeds = append(user.feeds[:deleted], user.feeds[deleted+1:]...)
 	return nil
 }
 
 func (db *jsonDB) addFeed(userId Id, feedId Id) error {
 	// add a new feed in user's list
-	db.users[userId].feeds = append(db.users[userId].feeds, feedId)
+	db.Users[userId].feeds = append(db.Users[userId].feeds, feedId)
 	return nil
 }
