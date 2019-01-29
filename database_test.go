@@ -12,10 +12,11 @@ func TestCRUD(t *testing.T) {
 	var db Database = newjsonDB("test-data/db.json")
 	var userId Id = db.checkUser(tg)
 	var feedId Id = db.checkFeed(url)
+	var err error
 	// insert Feed Data
-	if isUser == -1 {
+	if userId == -1 {
 		t.Log("Didn't check user")
-		if isFeed == -1 {
+		if feedId == -1 {
 			t.Log("Didn't check feed")
 			feedId, err = db.insertFeed(url, updated)
 			if err != nil {
@@ -38,11 +39,16 @@ func TestCRUD(t *testing.T) {
 	}
 	t.Log("users: ", users)
 	// remove
+	t.Logf("userId: %d\tfeedId: %d\n", userId, feedId)
 	err = db.deleteFeed(userId, feedId)
 	if err != nil {
 		t.Error("delete feed fatal")
 	}
-	err = db.deleteUser(userId)
+	users, err = db.getSubscriber(feedId)
+	if len(users) != 0 {
+		t.Error("db.deleteFeed didn't work", users)
+	}
+	err = db.removeUser(userId)
 	if err != nil {
 		t.Error("delete user fatal")
 	}
