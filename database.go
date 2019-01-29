@@ -1,42 +1,18 @@
 package main
 
-import (
-	"database/sql"
-	//	"github.com/mattn/go-sqlite3"
-)
+import ()
 
 type Database interface {
-	insertFeed(Feed) error
-	removeFeed(string) error
-	getFeed([]string) ([]Feed, error)
-	insertUser(User) error
-	updateUser(*User) error
-	getUser() ([]User, error)
-	removeUser(*Feed) error
-}
+	insertFeed(string, Time) error
+	updateFeed(Id, Time) error
+	checkFeed(string) (Id, error)
+	getFeed(Id) (Feed, error)
+	removeFeed(Id) error
 
-type SQLiteDB struct {
-	db sql.DB
-}
-
-type JSON_DB struct {
-	feeds []Feed
-	users []User
-}
-
-func (db *JSON_DB) insertFeed(feed Feed) {
-	feed.id = Id(len(db.feeds))
-	db.feeds = append(db.feeds, feed)
-}
-
-func (db *JSON_DB) updateFeed(id Id, time Time) {
-	db.feeds[id].updated = time
-}
-
-func (db *JSON_DB) get() {
-
-}
-
-func (db *JSON_DB) remove() {
-
+	insertUser(string) (Id, error)
+	checkUser(string) (Id, error)
+	getUser(Id) (User, error)
+	removeUser(Id) error
+	deleteFeed(Id, Id) error
+	addFeed(Id, Id) error
 }

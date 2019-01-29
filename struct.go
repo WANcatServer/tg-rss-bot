@@ -17,6 +17,7 @@ type Post struct {
 }
 
 type User struct {
-	id    string
+	id    Id
+	url   string
 	feeds []Id
 }
