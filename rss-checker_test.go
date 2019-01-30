@@ -26,7 +26,7 @@ func TestCheck(t *testing.T) {
 	if !hasNew {
 		t.Error("Check fail: should be 'true' but except 'false'")
 	}
-	testFeed.updated = "2019-01-20T05:23:25.070Z"
+	testFeed.Updated = "2019-01-20T05:23:25.070Z"
 	hasNew, err = CheckNew(body, testFeed)
 	if err != nil {
 		t.Error(err)

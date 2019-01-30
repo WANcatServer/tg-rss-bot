@@ -3,17 +3,17 @@ package main
 type Database interface {
 	Close() error
 
-	insertFeed(string, Time) (Id, error)
-	updateFeed(Id, Time) error
-	checkFeed(string) Id
-	getFeed(Id) (*Feed, error)
-	removeFeed(Id) error
-	getSubscriber(Id) ([]User, error)
+	insertFeed(string, Time) (ID, error)
+	updateFeed(ID, Time) error
+	checkFeed(string) ID
+	getFeed(ID) (*Feed, error)
+	removeFeed(ID) error
+	getSubscriber(ID) ([]User, error)
 
-	insertUser(string) (Id, error)
-	checkUser(string) Id
-	getUser(Id) (*User, error)
-	removeUser(Id) error
-	deleteFeed(Id, Id) error
-	addFeed(Id, Id) error
+	insertUser(string) (ID, error)
+	checkUser(string) ID
+	getUser(ID) (*User, error)
+	removeUser(ID) error
+	deleteFeed(ID, ID) error
+	addFeed(ID, ID) error
 }

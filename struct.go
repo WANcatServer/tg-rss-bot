@@ -1,23 +1,23 @@
 package main
 
-type Id int
+type ID int
 type Time string
 
 type Feed struct {
-	id      Id
-	url     string
-	updated Time
+	Id      ID
+	Url     string
+	Updated Time
 }
 
 type Post struct {
-	feedId  Id
-	title   string
-	summary string
-	image   string
+	FeedId  ID
+	Title   string
+	Summary string
+	Image   string
 }
 
 type User struct {
-	id    Id
-	url   string
-	feeds []Id
+	Id    ID
+	Url   string
+	Feeds []ID
 }

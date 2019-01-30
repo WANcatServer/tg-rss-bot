@@ -4,21 +4,23 @@ import (
 	"testing"
 )
 
-var url string = "https://wancat.cc/atom.xml"
-var updated Time = "2018-12-31T16:00:00.000Z"
+var Url string = "https://wancat.cc/atom.xml"
+var Updated Time = "2018-12-31T16:00:00.000Z"
 var tg string = "t.me/lancatlin"
 
 func TestCRUD(t *testing.T) {
-	var db Database = newjsonDB("test-data/db.json")
-	var userId Id = db.checkUser(tg)
-	var feedId Id = db.checkFeed(url)
+	var db Database
 	var err error
+	db, err = NewjsonDB(`test-data/db.json`)
+	defer db.Close()
+	var userId ID = db.checkUser(tg)
+	var feedId ID = db.checkFeed(Url)
 	// insert Feed Data
 	if userId == -1 {
 		t.Log("Didn't check user")
 		if feedId == -1 {
 			t.Log("Didn't check feed")
-			feedId, err = db.insertFeed(url, updated)
+			feedId, err = db.insertFeed(Url, Updated)
 			if err != nil {
 				t.Error("insert feed fatal: ", err)
 			}
@@ -52,5 +54,4 @@ func TestCRUD(t *testing.T) {
 	if err != nil {
 		t.Error("delete user fatal")
 	}
-	db.Close()
 }

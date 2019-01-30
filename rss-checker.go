@@ -25,7 +25,7 @@ type Entry struct {
 
 func Request(feed Feed) (body []byte, err error) {
 	//抓取資料
-	resp, err := http.Get(feed.url)
+	resp, err := http.Get(feed.Url)
 	if err != nil {
 		return
 	}
@@ -46,6 +46,6 @@ func Parse(body []byte) Atom {
 func CheckNew(body []byte, feed Feed) (bool, error) {
 	//檢查是否有新文章
 	var v Atom = Parse(body)
-	log.Printf("update v:\t%s\nfeed:\t%s\n", v.Updated, feed.updated)
-	return v.Updated != feed.updated, nil
+	log.Printf("update v:\t%s\nfeed:\t%s\n", v.Updated, feed.Updated)
+	return v.Updated != feed.Updated, nil
 }
